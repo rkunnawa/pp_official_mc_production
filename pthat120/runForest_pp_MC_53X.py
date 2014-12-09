@@ -29,7 +29,7 @@ process.HiForest.HiForestVersion = cms.untracked.string(version)
 process.source = cms.Source("PoolSource",
                             duplicateCheckMode = cms.untracked.string("noDuplicateCheck"),
                             fileNames = cms.untracked.vstring(
-    "file:/afs/cern.ch/work/r/richard/public/pp-MC-GEN-SIM-RECO.root"
+    "file:root://xrootd.unl.edu//store/himc/HiWinter13/QCD_Pt_15_TuneZ2_2p76TeV_pythia6/GEN-SIM-RECO/STARTHI53_V28-v1/00000/0008D53F-769B-E311-A0D3-7845C4FC3C56.root"
     ))
 
 # Number of events we want to process, -1 = all events
@@ -58,7 +58,7 @@ process.load('FWCore.MessageService.MessageLogger_cfi')
 from Configuration.AlCa.GlobalTag import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, 'STARTHI53_V28::All', '')
 
-from HeavyIonsAnalysis.Configuration.CommonFunctions_cff import *
+from HeavyIonsAnalysis.Configuration.CommonFunctionsLocalDBforPPJEC_cff import *
 overrideGT_pp2760(process)
 overrideJEC_pp2760(process)
 
@@ -73,7 +73,7 @@ process.HeavyIonGlobalParameters = cms.PSet(
 #####################################################################################
 
 process.TFileService = cms.Service("TFileService",
-                                   fileName=cms.string("HiForest.root"))
+                                   fileName=cms.string("HiForest_pp_Offical_MC_pthat_120_53X_STARTHI53_V28_5_3_20_correctJEC_pawan_30Nov2014.root"))
 
 #####################################################################################
 # Additional Reconstruction and Analysis: Main Body
@@ -95,6 +95,13 @@ process.hiEvtPlane.vtxCollection_ = cms.InputTag("offlinePrimaryVerticesWithBS")
 process.hiEvtPlane.trackCollection_ = cms.InputTag("generalTracks")
 
 process.load('HeavyIonsAnalysis.JetAnalysis.jets.HiGenJetsCleaned_JEC_cff')
+
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akPu1CaloJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akVs1CaloJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akVs1PFJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akPu1PFJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak1PFJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak1CaloJetSequence_pp_mc_cff')
 
 process.load('HeavyIonsAnalysis.JetAnalysis.jets.akPu2CaloJetSequence_pp_mc_cff')
 process.load('HeavyIonsAnalysis.JetAnalysis.jets.akVs2CaloJetSequence_pp_mc_cff')
@@ -124,6 +131,20 @@ process.load('HeavyIonsAnalysis.JetAnalysis.jets.akPu5PFJetSequence_pp_mc_cff')
 process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak5PFJetSequence_pp_mc_cff')
 process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak5CaloJetSequence_pp_mc_cff')
 
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akPu6CaloJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akVs6CaloJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akVs6PFJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akPu6PFJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak6PFJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak6CaloJetSequence_pp_mc_cff')
+
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akPu7CaloJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akVs7CaloJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akVs7PFJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.akPu7PFJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak7PFJetSequence_pp_mc_cff')
+process.load('HeavyIonsAnalysis.JetAnalysis.jets.ak7CaloJetSequence_pp_mc_cff')
+
 process.load('HeavyIonsAnalysis.JetAnalysis.jets.HiReRecoJets_pp_cff')
 process.voronoiBackgroundPF.src = cms.InputTag("particleFlow")
 process.PFTowers.src = cms.InputTag("particleFlow")
@@ -133,6 +154,13 @@ process.jetSequences = cms.Sequence(process.voronoiBackgroundCalo +
                                     process.PFTowers +
                                     process.hiReRecoCaloJets +
                                     process.hiReRecoPFJets +
+
+                                    process.akPu1CaloJetSequence +
+                                    process.akVs1CaloJetSequence +
+                                    process.akVs1PFJetSequence +
+                                    process.akPu1PFJetSequence +
+                                    process.ak1PFJetSequence +
+                                    process.ak1CaloJetSequence +
 
                                     process.akPu2CaloJetSequence +
                                     process.akVs2CaloJetSequence +
@@ -160,9 +188,22 @@ process.jetSequences = cms.Sequence(process.voronoiBackgroundCalo +
                                     process.akVs5PFJetSequence +
                                     process.akPu5PFJetSequence +
                                     process.ak5PFJetSequence +
-                                    process.ak5CaloJetSequence
+                                    process.ak5CaloJetSequence +
 
-                                    )
+                                    process.akPu6CaloJetSequence +
+                                    process.akVs6CaloJetSequence +
+                                    process.akVs6PFJetSequence +
+                                    process.akPu6PFJetSequence +
+                                    process.ak6PFJetSequence +
+                                    process.ak6CaloJetSequence +
+
+                                    process.akPu7CaloJetSequence +
+                                    process.akVs7CaloJetSequence +
+                                    process.akVs7PFJetSequence +
+                                    process.akPu7PFJetSequence +
+                                    process.ak7PFJetSequence +
+                                    process.ak7CaloJetSequence 
+)
 
 process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_mc_cfi')
 process.load('HeavyIonsAnalysis.JetAnalysis.HiGenAnalyzer_cfi')
